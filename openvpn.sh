@@ -65,7 +65,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 		echo "   4) Exit"
 		read -p "Select an option [1-4]: " option
 		case $option in
-			1) 
+			1)
 			echo
 			echo "Tell me a name for the client certificate."
 			echo "Please, use one word only, no special characters."
@@ -117,7 +117,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 			fi
 			exit
 			;;
-			3) 
+			3)
 			echo
 			read -p "Do you really want to remove OpenVPN? [y/N]: " -e REMOVE
 			if [[ "$REMOVE" = 'y' || "$REMOVE" = 'Y' ]]; then
@@ -191,10 +191,10 @@ else
 	echo "   2) TCP"
 	read -p "Protocol [1-2]: " -e -i 1 PROTOCOL
 	case $PROTOCOL in
-		1) 
+		1)
 		PROTOCOL=udp
 		;;
-		2) 
+		2)
 		PROTOCOL=tcp
 		;;
 	esac
@@ -225,11 +225,13 @@ else
 		yum install openvpn iptables openssl ca-certificates -y
 	fi
 	# Get easy-rsa
-	EASYRSAURL='https://github.com/dockercore/ldap-openvpn/blob/master/EasyRSA-nix-3.0.5.tgz'
+	EASYRSAURL='https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.8/EasyRSA-3.0.8.tgz'
 	wget -O ~/easyrsa.tgz "$EASYRSAURL" 2>/dev/null || curl -Lo ~/easyrsa.tgz "$EASYRSAURL"
-	tar xzf ~/easyrsa.tgz -C ~/
-	mv ~/EasyRSA-3.0.5/ /etc/openvpn/
-	mv /etc/openvpn/EasyRSA-3.0.5/ /etc/openvpn/easy-rsa/
+	#wget https://github.com/dockercore/ldap-openvpn/blob/master/EasyRSA-nix-3.0.5.tgz
+	#mv EasyRSA-3.0.8.tgz ~/easyrsa.tgz
+	tar xvf ~/easyrsa.tgz -C ~/
+	mv ~/EasyRSA-3.0.8/ /etc/openvpn/
+	mv /etc/openvpn/EasyRSA-3.0.8/ /etc/openvpn/easy-rsa/
 	chown -R root:root /etc/openvpn/easy-rsa/
 	rm -f ~/easyrsa.tgz
 	cd /etc/openvpn/easy-rsa/
